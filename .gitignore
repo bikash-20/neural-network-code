@@ -11,6 +11,10 @@ venv/
 env/
 ENV/
 
+# Marimo editor / cache files
+__marimo__/
+.marimo/
+
 # Distribution / packaging
 build/
 dist/
