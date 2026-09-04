@@ -6,7 +6,7 @@
 
 ## Project Overview
 
-This repository documents an empirical, bottom-up exploration of neural network architectures. Following a strict **observe $\rightarrow$ hypothesize $\rightarrow$ implement $\rightarrow$ evaluate** workflow, this project bridges the gap between high-level abstractions (`torch.nn`) and the underlying multivariate calculus, matrix algebra, and algorithmic design that govern deep learning systems.
+This repository documents an empirical, bottom-up exploration of neural network architectures. Following a strict **observe $\rightarrow$ hypothesize $\rightarrow$ implement $\rightarrow$ evaluate** methodology, we progress from foundational linear algebra through sophisticated architectural patterns.
 
 ---
 
@@ -88,7 +88,7 @@ $$b^{(l)} := b^{(l)} - \alpha \frac{\partial \mathcal{L}}{\partial b^{(l)}}$$
 ### Phase 2: Structural Regularization & Optimization
 
 #### 1. Inverted Dropout Regularization
-To mitigate co-adaptation of features during training, units are zeroed with probability $p$. During training, activation outputs are scaled by $\frac{1}{1-p}$ to maintain constant expectation $\mathbb{E}[a^{(l)}] = a^{(l)}$ at test time:
+To mitigate co-adaptation of features during training, units are zeroed with probability $p$. During training, activation outputs are scaled by $\frac{1}{1-p}$ to maintain constant expectation:
 
 $$r_j^{(l)} \sim \text{Bernoulli}(1-p)$$
 
@@ -123,7 +123,7 @@ $$H_{out} = \left\lfloor \frac{H_{in} - K_h + 2P}{S} \right\rfloor + 1$$
 | Phase | Dataset | Model Architecture | Key Techniques | Optimization | Test Accuracy | Epochs |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Phase 1** | **Iris** *(150 samples)* | 2-Layer Dense Network (4 $\rightarrow$ 8 $\rightarrow$ 3) | Pure NumPy, Analytical Backprop | Full-batch GD ($\alpha=0.01$) | **96.67%** | 1500 |
-| **Phase 2** | **Wine Quality** *(4,898 white wines)* | Multi-Layer Perceptron (11 $\rightarrow$ 64 $\rightarrow$ 32 $\rightarrow$ 1) | Inverted Dropout ($p=0.2$), BCE | Adam ($lr=1e-3$) | **83.67%** | 100 |
+| **Phase 2** | **Wine Quality** *(4,898 white wines)* | Multi-Layer Perceptron (11 $\rightarrow$ 64 $\rightarrow$ 32 $\rightarrow$ 1) | Inverted Dropout ($p=0.2$), BCE | Adam ($lr=1e-3$) | **83.67%** | 50 |
 | **Phase 3** | **MNIST** *(70,000 images)* | CNN (Conv3x3 $\rightarrow$ MaxPool $\rightarrow$ Conv3x3 $\rightarrow$ Linear) | Spatial Feature Maps, Dropout | Adam ($lr=1e-3$) | **99.09%** | 5 |
 
 ---
@@ -178,20 +178,28 @@ neural-network/
     ├── wine_quality.py        # PyTorch MLP Pipeline
     ├── mnist_classifier.py    # PyTorch Convolutional Engine
     └── utils.py               # Shared path & seeding helpers
+```
 
-Execution Guide
-Environment Setup
-Bash
+---
+
+## Execution Guide
+
+### Environment Setup
+
+```bash
 # Clone repository
-git clone [https://github.com/bikash-20/neural-network-code.git](https://github.com/bikash-20/neural-network-code.git)
+git clone https://github.com/bikash-20/neural-network-code.git
 cd neural-network-code
 
 # Create virtual environment and install dependencies
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-Reproducing Results
-Bash
+```
+
+### Reproducing Results
+
+```bash
 # Phase 1: Pure NumPy Iris Classifier
 python3 src/iris_classifier.py
 
@@ -200,17 +208,28 @@ python3 src/wine_quality.py
 
 # Phase 3: PyTorch MNIST CNN
 python3 src/mnist_classifier.py
-Interactive Notebook Exploration
+```
+
+### Interactive Notebook Exploration
+
 To run the reactive Marimo notebooks for inline step-by-step mathematical walkthroughs:
-Bash
+
+```bash
 marimo edit notebooks/01_iris_explained.py
-Primary References & Resources
-Nielsen, Michael A. "Neural Networks and Deep Learning", Determination Press, 2015. Online Book
-3Blue1Brown. "But what is a neural network?", Visual Mathematics Series. YouTube
-MIT 6.S191. "Introduction to Deep Learning". YouTube
-LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). "Gradient-based learning applied to document recognition." Proceedings of the IEEE.
-Goodfellow, I., Bengio, Y., & Courville, A. "Deep Learning", MIT Press, 2016.
-Researcher: Bikash Talukder
-Repository: github.com/bikash-20/neural-network-code
-License: MIT
-http://googleusercontent.com/youtube_content/1    
+```
+
+---
+
+## Primary References & Resources
+
+- Nielsen, Michael A. "Neural Networks and Deep Learning", Determination Press, 2015. [Online Book](http://neuralnetworksanddeeplearning.com/)
+- 3Blue1Brown. "But what is a neural network?", Visual Mathematics Series. [YouTube](https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi)
+- MIT 6.S191. "Introduction to Deep Learning". [YouTube](https://www.youtube.com/playlist?list=PLtBw6njQRH-CRCWh-lbGsjMYR41MMWX5t)
+- LeCun, Y., Bottou, L., Bengio, Y., & Haffner, P. (1998). "Gradient-based learning applied to document recognition." *Proceedings of the IEEE*.
+- Goodfellow, I., Bengio, Y., & Courville, A. "Deep Learning", MIT Press, 2016.
+
+---
+
+**Researcher**: Bikash Talukder  
+**Repository**: [github.com/bikash-20/neural-network-code](https://github.com/bikash-20/neural-network-code)  
+**License**: MIT
